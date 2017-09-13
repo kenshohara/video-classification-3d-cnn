@@ -43,7 +43,7 @@ function classify_video(video_dir, video_name, class_names)
 
           collectgarbage()
 
-          return inputs
+          return inputs, class_names
         end,
         classify_batch
     )
@@ -60,7 +60,7 @@ function classify_video(video_dir, video_name, class_names)
     table.insert(clip_results, video_name)
     table.insert(clip_results, clips[i].segment[1])
     table.insert(clip_results, clips[i].segment[2])
-    table.insert(clip_results, class_names[scores_sorted_loc[1][1]])
+    table.insert(clip_results, class_names[scores_sorted_loc[i][1]])
     for j = 1, opt.n_classes do
       table.insert(clip_results, video_outputs[i][j])
     end
@@ -73,7 +73,7 @@ end
 local inputs
 inputs = torch.CudaTensor()
 
-function classify_batch(inputs_cpu)
+function classify_batch(inputs_cpu, class_names)
   local batch_size = inputs_cpu:size(1)
   if batch_size < 10 then
     local new_size = inputs_cpu:size()
@@ -95,6 +95,12 @@ function classify_batch(inputs_cpu)
   for i = 1, batch_size do
     local index = next_clip_index + i - 1
     video_outputs[index] = outputs[i]
+
+    if opt.verbose then
+      local outputs_sorted, outputs_sorted_loc = outputs:float():sort(2, true)
+      local class_name = class_names[outputs_sorted_loc[i][1]]
+      print(string.format('clip %d, %s, %f', index, class_name, outputs_sorted[1][1]))
+    end
   end
   next_clip_index = next_clip_index + batch_size
 end
