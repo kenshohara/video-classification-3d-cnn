@@ -9,6 +9,7 @@ function opts.parse(arg)
   cmd:option('--gpu_id',     1, 'ID of GPU to use')
   cmd:option('--n_gpus',     2, 'Number of GPUs to use')
   cmd:option('--n_threads',  4, 'Number of threads for multi-thread loading')
+  cmd:option('--verbose',    false, '')
 
   local opt = cmd:parse(arg or {})
   return opt

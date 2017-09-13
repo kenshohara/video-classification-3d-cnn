@@ -14,7 +14,7 @@ function classify_video(video_dir, video_name)
     local sample_begin_t = t
     local sample_end_t = t + opt.sample_duration - 1
     local sample_data = {}
-    sample_data.video = video_path
+    sample_data.video = video_dir
     sample_data.segment = {sample_begin_t, sample_end_t}
     table.insert(clips, sample_data)
   end
@@ -57,7 +57,7 @@ function classify_video(video_dir, video_name)
     clip_results = {}
     table.insert(clip_results, video_name)
     table.insert(clip_results, clips[i].segment[1])
-    table.insert(clip_results, clips[i].segment[2]),
+    table.insert(clip_results, clips[i].segment[2])
     for j = 1, opt.n_classes do
       table.insert(clip_results, video_outputs[i][j])
     end
