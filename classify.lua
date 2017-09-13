@@ -54,17 +54,18 @@ function classify_video(video_dir, video_name, class_names)
 
   local _, scores_sorted_loc = video_outputs:float():sort(2, true)
 
-  results = {}
+  results = {
+    video = video_name,
+    clips = {}
+  }
   for i = 1, #clips do
-    clip_results = {}
-    table.insert(clip_results, video_name)
-    table.insert(clip_results, clips[i].segment[1])
-    table.insert(clip_results, clips[i].segment[2])
-    table.insert(clip_results, class_names[scores_sorted_loc[i][1]])
-    for j = 1, opt.n_classes do
-      table.insert(clip_results, video_outputs[i][j])
-    end
-    table.insert(results, clip_results)
+    clip_results = {
+      segment = clips[i].segment,
+      label = class_names[scores_sorted_loc[i][1]],
+      scores = torch.totable(video_outputs[i])
+    }
+
+    table.insert(results.clips, clip_results)
   end
 
   return results

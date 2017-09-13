@@ -76,10 +76,8 @@ for i = 1, #input_files do
     os.execute(string.format('ffmpeg -i "%s" -loglevel %s "%s/image_%%05d.jpg"',
                              input_files[i], ffmpeg_loglevel, video_dir))
 
-    local results = classify_video(video_dir, input_files[i], class_names)
-    for j = 1, #results do
-      table.insert(output ,results[j])
-    end
+    local result = classify_video(video_dir, input_files[i], class_names)
+    table.insert(output, result)
 
     os.execute(string.format('rm -rf %s', video_dir))
   else
@@ -88,13 +86,5 @@ for i = 1, #input_files do
 end
 os.execute('rm -rf tmp')
 
-local fout = io.open(opt.output, 'w')
-for i = 1, #output do
-  for j = 1, #output[i] - 1 do
-    fout:write(output[i][j])
-    fout:write(',')
-  end
-  fout:write(output[i][#output[i]])
-  fout:write('\n')
-end
-fout:close()
+require('json')
+json.save(opt.output, output)
