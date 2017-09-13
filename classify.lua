@@ -45,7 +45,7 @@ function classify_video(video_dir, video_name)
 
           return inputs
         end,
-        test_video_batch
+        classify_batch
     )
   end
 
