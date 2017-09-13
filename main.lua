@@ -49,6 +49,13 @@ for line in fin:lines() do
 end
 fin:close()
 
+local fin2 = io.open('class_names_list', 'r')
+local class_names = {}
+for line in fin2:lines() do
+  table.insert(class_names, line)
+end
+fin2:close()
+
 dofile('classify.lua')
 
 local output = {}
@@ -69,7 +76,7 @@ for i = 1, #input_files do
     os.execute(string.format('ffmpeg -i "%s" -loglevel %s "%s/image_%%05d.jpg"',
                              input_files[i], ffmpeg_loglevel, video_dir))
 
-    local results = classify_video(video_dir, input_files[i])
+    local results = classify_video(video_dir, input_files[i], class_names)
     for j = 1, #results do
       table.insert(output ,results[j])
     end

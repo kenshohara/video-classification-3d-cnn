@@ -1,4 +1,4 @@
-function classify_video(video_dir, video_name)
+function classify_video(video_dir, video_name, class_names)
   cutorch.synchronize()
 
   local files = {}
@@ -52,12 +52,15 @@ function classify_video(video_dir, video_name)
   task_queue:synchronize()
   cutorch.synchronize()
 
+  local _, scores_sorted_loc = video_outputs:float():sort(2, true)
+
   results = {}
   for i = 1, #clips do
     clip_results = {}
     table.insert(clip_results, video_name)
     table.insert(clip_results, clips[i].segment[1])
     table.insert(clip_results, clips[i].segment[2])
+    table.insert(clip_results, class_names[scores_sorted_loc[1]])
     for j = 1, opt.n_classes do
       table.insert(clip_results, video_outputs[i][j])
     end
