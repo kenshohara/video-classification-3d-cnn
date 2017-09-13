@@ -19,6 +19,7 @@ opt.n_classes = 400
 model = torch.load(opt.model)
 utils = dofile('utils.lua')
 model = utils.make_data_parallel(model, opt.gpu_id, opt.n_gpus)
+model:evaluate()
 if opt.verbose then
   print(model)
 end
