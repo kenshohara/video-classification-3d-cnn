@@ -60,7 +60,7 @@ function classify_video(video_dir, video_name, class_names)
     table.insert(clip_results, video_name)
     table.insert(clip_results, clips[i].segment[1])
     table.insert(clip_results, clips[i].segment[2])
-    table.insert(clip_results, class_names[scores_sorted_loc[1]])
+    table.insert(clip_results, class_names[scores_sorted_loc[1][1]])
     for j = 1, opt.n_classes do
       table.insert(clip_results, video_outputs[i][j])
     end
