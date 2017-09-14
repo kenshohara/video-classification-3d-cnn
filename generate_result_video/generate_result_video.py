@@ -89,5 +89,5 @@ if __name__ == '__main__':
                 image.save('tmp/image_{:05}_pred.jpg'.format(j))
 
         dst_file_path = os.path.join(dst_directory_path, video_path.split('/')[-1])
-        subprocess.call('ffmpeg -y -r {} -i tmp/image_%05d_pred.jpg -b:v 1000k {}_pred.mp4'.format(fps, dst_file_path),
+        subprocess.call('ffmpeg -y -r {} -i tmp/image_%05d_pred.jpg -b:v 1000k {}'.format(fps, dst_file_path),
                         shell=True)
