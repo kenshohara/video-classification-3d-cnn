@@ -2,6 +2,11 @@
 This is a code for generating videos of classification results.  
 It uses both ```output.json``` and videos as inputs and draw predicted class names in each frame.
 
+## Requirements
+* Python 3
+* Pillow
+* ffmpeg, ffprobe
+
 ## Usage
 To generate videos based on ```../output.json```, execute the following.
 ```
