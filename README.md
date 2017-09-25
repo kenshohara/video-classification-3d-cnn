@@ -3,6 +3,8 @@ This is a torch code for video (action) classification using 3D ResNet trained b
 The 3D ResNet is trained on the Kinetics dataset, which includes 400 action classes.  
 This code uses videos as inputs and outputs class names and predicted class scores for each 16 frames.  
 
+**PyTorch (Python) version of this code is available [here](https://github.com/kenshohara/video-classification-3d-cnn-pytorch).**
+
 ## Requirements
 * [Torch](http://torch.ch/)
 ```
